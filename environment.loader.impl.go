@@ -26,10 +26,10 @@ func NewDefaultEnvironmentLoader() *EnvironmentLoaderImpl {
 }
 
 func (ecfp *EnvironmentLoaderImpl) LoadIntFromEnv(field string) (int, error) {
-	envValue, fieldError := ecfp.RegexParser.GetEnv(field)
+	envValue, err := ecfp.RegexParser.GetEnv(field)
 
-	if fieldError != nil {
-		return 0, fieldError
+	if err != nil {
+		return 0, err
 	}
 
 	value := ecfp.getEnv(*envValue)
@@ -47,10 +47,10 @@ func (ecfp *EnvironmentLoaderImpl) LoadIntFromEnv(field string) (int, error) {
 }
 
 func (ecfp *EnvironmentLoaderImpl) LoadStringFromEnv(field string) (string, error) {
-	envValue, fieldError := ecfp.RegexParser.GetEnv(field)
+	envValue, err := ecfp.RegexParser.GetEnv(field)
 
-	if fieldError != nil {
-		return "", fieldError
+	if err != nil {
+		return "", err
 	}
 
 	value := ecfp.getEnv(*envValue)
