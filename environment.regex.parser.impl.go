@@ -56,7 +56,6 @@ func (rp *EnvironmentRegexParserImpl) GetEnv(field string) (*EnvironmentVariable
 		leftEnclosure = rp.EncloseType.LeftEnclosure
 		rightEnclosure = rp.EncloseType.RightEnclosure
 	}
-	// if strings.TrimSpace(rp.Prefix) != "" {
 	if strings.HasPrefix(strings.TrimSpace(field), rp.Prefix+leftEnclosure) {
 		matched, err := regexp.MatchString(rp.EnvironmentVariableRegExp, strings.TrimSpace(field))
 		if !matched || err != nil {
@@ -69,7 +68,6 @@ func (rp *EnvironmentRegexParserImpl) GetEnv(field string) (*EnvironmentVariable
 		}
 		return rp.extractEnvValue(field)
 	}
-	// }
 	return &EnvironmentVariable{
 		Name:         "",
 		DefaultValue: field,
