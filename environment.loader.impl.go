@@ -14,13 +14,13 @@ type EnvironmentLoaderImpl struct {
 //Check we implement interface
 var _ EnvironmentLoader = &EnvironmentLoaderImpl{}
 
-func NewEnvironmentConfigFileParserImpl(regexParser EnvironmentRegexParser) *EnvironmentLoaderImpl {
+func NewEnvironmentLoader(regexParser EnvironmentRegexParser) *EnvironmentLoaderImpl {
 	return &EnvironmentLoaderImpl{
 		RegexParser: regexParser,
 	}
 }
 
-func (ecfp *EnvironmentLoaderImpl) LoadIntEnv(field string) (int, error) {
+func (ecfp *EnvironmentLoaderImpl) LoadIntFromEnv(field string) (int, error) {
 	envValue, fieldError := ecfp.RegexParser.GetEnv(field)
 
 	if fieldError != nil {
@@ -30,18 +30,18 @@ func (ecfp *EnvironmentLoaderImpl) LoadIntEnv(field string) (int, error) {
 	value := ecfp.getEnv(*envValue)
 
 	if value == "" {
-		return 0, fmt.Errorf("could not find environment variable '%s'", envValue.Name)
+		return 0, fmt.Errorf("error: could not find environment variable '%s'", envValue.Name)
 
 	}
 
 	intFieldValue, err := strconv.Atoi(value)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("error: failed to convert string to int: %w", err)
 	}
 	return intFieldValue, nil
 }
 
-func (ecfp *EnvironmentLoaderImpl) LoadStringEnv(field string) (string, error) {
+func (ecfp *EnvironmentLoaderImpl) LoadStringFromEnv(field string) (string, error) {
 	envValue, fieldError := ecfp.RegexParser.GetEnv(field)
 
 	if fieldError != nil {

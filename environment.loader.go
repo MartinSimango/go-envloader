@@ -6,6 +6,6 @@ type EnvironmentVariable struct {
 }
 
 type EnvironmentLoader interface {
-	LoadStringEnv(field string) (string, error)
-	LoadIntEnv(field string) (int, error)
+	LoadStringFromEnv(field string) (string, error)
+	LoadIntFromEnv(field string) (int, error)
 }
