@@ -25,6 +25,11 @@ func NewDefaultEnvironmentLoader() *EnvironmentLoaderImpl {
 	return NewEnvironmentLoader(regexParser)
 }
 
+func NewBraceEnvironmentLoader() *EnvironmentLoaderImpl {
+	regexParer := NewDefaultEnvironmentRegexParser()
+	return NewEnvironmentLoader(regexParer)
+}
+
 func (ecfp *EnvironmentLoaderImpl) LoadIntFromEnv(field string) (int, error) {
 	envValue, err := ecfp.RegexParser.GetEnv(field)
 
