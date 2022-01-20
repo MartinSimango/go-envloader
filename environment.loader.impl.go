@@ -37,7 +37,7 @@ func (ecfp *EnvironmentLoaderImpl) LoadIntFromEnv(field string) (int, error) {
 		return 0, err
 	}
 
-	value := ecfp.getEnv(*envValue)
+	value, isEnv := ecfp.getEnv(*envValue)
 
 	if value == "" {
 		return 0, fmt.Errorf("error: could not find environment variable '%s'", envValue.Name)
@@ -46,6 +46,9 @@ func (ecfp *EnvironmentLoaderImpl) LoadIntFromEnv(field string) (int, error) {
 
 	intFieldValue, err := strconv.Atoi(value)
 	if err != nil {
+		if isEnv {
+			return 0, fmt.Errorf("error: failed to convert value '%s' to int. Environment variable %s = %s", value, envValue.Name, value)
+		}
 		return 0, fmt.Errorf("error: failed to convert string to int: %w", err)
 	}
 	return intFieldValue, nil
@@ -58,7 +61,7 @@ func (ecfp *EnvironmentLoaderImpl) LoadStringFromEnv(field string) (string, erro
 		return "", err
 	}
 
-	value := ecfp.getEnv(*envValue)
+	value, _ := ecfp.getEnv(*envValue)
 
 	if value == "" {
 		return "", fmt.Errorf("could not find environment variable '%s'", envValue.Name)
@@ -66,12 +69,12 @@ func (ecfp *EnvironmentLoaderImpl) LoadStringFromEnv(field string) (string, erro
 	return value, nil
 }
 
-func (ecfp *EnvironmentLoaderImpl) getEnv(envVariable EnvironmentVariable) string {
+func (ecfp *EnvironmentLoaderImpl) getEnv(envVariable EnvironmentVariable) (string, bool) {
 	env := strings.TrimSpace(os.Getenv(envVariable.Name))
 	defaultValue := strings.TrimSpace(envVariable.DefaultValue)
 
 	if env == "" {
-		return defaultValue
+		return defaultValue, false
 	}
-	return env
+	return env, true
 }
