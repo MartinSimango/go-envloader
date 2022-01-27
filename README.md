@@ -2,11 +2,12 @@
 A simple go library for loading environment variables from template strings
 
 ### Install
-
+```
 go get github.com/MartinSimango/go-envloader
+```
 
 
-### How To Use
+### Example
 
 ``` go
 
@@ -35,3 +36,5 @@ func main() {
 }
 
 ```
+The regex parser defines the format of how the environment variable and it's default will be. For the above example the format of environment variable is: \
+&{ENVIRONMENT_VARIABLE:default_value}
