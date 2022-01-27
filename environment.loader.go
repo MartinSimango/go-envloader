@@ -8,4 +8,6 @@ type EnvironmentVariable struct {
 type EnvironmentLoader interface {
 	LoadStringFromEnv(field string) (string, error)
 	LoadIntFromEnv(field string) (int, error)
+	LoadFloatFromEnv(field string) (float64, error)
+	LoadBoolFromEnv(field string) (bool, error)
 }
