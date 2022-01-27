@@ -1,6 +1,5 @@
 # go-envloader
-A simple go library for loading environment variables from template strings
-
+A simple go library for loading environment variables with default values.
 ### Install
 ```
 go get github.com/MartinSimango/go-envloader
