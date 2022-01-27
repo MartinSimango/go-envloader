@@ -25,7 +25,7 @@ func main() {
 	})
 	envLoader := goenvloader.NewEnvironmentLoader(regexParser)
 
-	val, err := envLoader.LoadIntFromEnv("&{ENV_VARIABLE,9000}")
+	val, err := envLoader.LoadIntFromEnv("&<ENV_VARIABLE:9000>")
 
 	if err != nil {
 		fmt.Println(err.Error())
